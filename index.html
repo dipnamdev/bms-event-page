@@ -1261,5 +1261,39 @@
       </div>
     </div>
   </body>
+  <script>
+  (function () {
+    const MAX = 9; // random under 10 (1–9)
+
+    const BTN_SELECTOR = '.sc-pxa29k-0.kawLLc';
+    const btn = document.querySelector(BTN_SELECTOR);
+    if (!btn) return;
+
+    // Hide button initially
+    btn.style.display = 'none';
+
+    // Reload count
+    let reloadCount = Number(localStorage.getItem('reloadCount') || 0) + 1;
+    localStorage.setItem('reloadCount', reloadCount);
+
+    // Random threshold (1–9)
+    let showAt = localStorage.getItem('showAt');
+    if (!showAt) {
+      showAt = Math.floor(Math.random() * MAX) + 1;
+      localStorage.setItem('showAt', showAt);
+    }
+
+    // Show button
+    if (reloadCount >= showAt) {
+      btn.style.display = 'block';
+
+      // reset after show
+      localStorage.removeItem('reloadCount');
+      localStorage.removeItem('showAt');
+    }
+  })();
+</script>
+
 </html>
+
 
