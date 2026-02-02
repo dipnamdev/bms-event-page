@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookMyShow - Queue</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .queue-card {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .header-img {
+            width: 100%;
+            background: #1a0a45; /* Dark purple base */
+            padding: 20px 0;
+            color: white;
+        }
+
+        .match-info {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .match-info h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .queue-status {
+            background: linear-gradient(to right, #2d1a47, #1a0a45);
+            color: white;
+            padding: 40px 20px;
+        }
+
+        #queue-number {
+            font-size: 4rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .sub-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .last-updated {
+            font-size: 0.7rem;
+            margin-top: 10px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="queue-card">
+        <div class="header-img">
+            <strong>ICC MEN'S T20 WORLD CUP 2026</strong><br>
+            INDIA vs USA
+        </div>
+
+        <div class="match-info">
+            <h2>You've Been Added To The Queue...</h2>
+        </div>
+
+        <div class="queue-status">
+            <span id="queue-number">---</span>
+            <div class="sub-text">people ahead of you</div>
+            <div class="last-updated">Queue status last updated at <span id="time-stamp">--:--:--</span></div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Allot random number between 1-500
+        let currentQueue = Math.floor(Math.random() * 50) + 1;
+        const queueDisplay = document.getElementById('queue-number');
+        const timeDisplay = document.getElementById('time-stamp');
+
+        function updateUI() {
+            queueDisplay.textContent = currentQueue;
+            timeDisplay.textContent = new Date().toLocaleTimeString();
+        }
+
+        function processQueue() {
+            if (currentQueue <= 0) {
+                // 2. Redirect when queue is cleared
+                window.location.href = "https://in.bookmyshow.com/sports/united-states-of-america-vs-netherlands-icc-men-s-t20-wc-2026/ET00474260/seat-layout/aerialcanvas/MACS/10066";
+                return;
+            }
+
+            // Reduce by a small random amount (1 to 5 people)
+            const reduction = Math.floor(Math.random() * 5) + 1;
+            currentQueue = Math.max(0, currentQueue - reduction);
+            
+            updateUI();
+
+            // 3. Set next interval between 1-10 seconds
+            const nextInterval = (Math.floor(Math.random() * 10) + 1) * 1000;
+            setTimeout(processQueue, nextInterval);
+        }
+
+        // Initial Start
+        updateUI();
+        processQueue();
+    </script>
+</body>
+</html>
